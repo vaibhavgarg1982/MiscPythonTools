@@ -175,7 +175,16 @@ def search_user():
     print(f"searching with {rootdir=}, {searchstring=}, {min_size=}, {max_size=}, {startdate=} , {stopdate=}")
     search(rootdir, searchstring, min_size, max_size, startdate , stopdate )
     
-
+def search_contents(rootdir, fileext="txt", text_to_search=""):
+    for root, dir, files in os.walk(rootdir):
+        for name in files:
+            if "."+fileext in name:
+                with open(os.path.join(root,name),errors='ignore') as f:
+                    textdata = f.read()
+                    if text_to_search in textdata:
+                        print(os.path.join(root,name)) 
+    
+    pass
 
 
 
@@ -187,7 +196,7 @@ if __name__ == "__main__":
     #findoldest("D:\\Dropbox", 30, searchstring=".")
     #listfiles("D:\\Desktop", recursive=0)
     #search("E:\\Laptop fullbkpup", "*vaibhav*.jpg*") #, startdate = "2017-06-01", stopdate= " 2017-07-31")
-    search_user()
-    
+    #search_user()
+    search_contents("d:\\desktop", fileext="py")
     pass
 
