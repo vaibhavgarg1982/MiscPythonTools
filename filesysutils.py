@@ -108,6 +108,20 @@ def listfiles(rootdir, recursive=0):
                 print(f)
 
 def search(rootdir, searchstring="*", min_size=0, max_size =32e9, startdate = "1970-01-01", stopdate = "2100-12-31" ):
+    '''
+    Prints the paths of the file search results.
+
+            Parameters:
+                    rootdir(string) : The root directory to start search
+                    searchstring (string): Optional, default "*". search string in UNIX style file search using wildcards "*" for 0 or more characters, ? for exactly one character.
+                    minsize (integer): Optional, default 0. The minimum file size for search.
+                    maxsize (integer): Optional, default 32e9 or 32 GB. The maximum file size for search.
+                    startdate (string): Optional, default "1970-01-01". The earliest modified date.
+                    stopdate (string): Optional, default "2100-12-31". The latest modified date.
+
+            Returns:
+                    None
+    '''
     import fnmatch, datetime
     filedict={}
     startyear, startmonth, startdate = map(int, startdate.split("-"))
@@ -174,5 +188,6 @@ if __name__ == "__main__":
     #listfiles("D:\\Desktop", recursive=0)
     #search("E:\\Laptop fullbkpup", "*vaibhav*.jpg*") #, startdate = "2017-06-01", stopdate= " 2017-07-31")
     search_user()
+    
     pass
 
