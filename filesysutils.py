@@ -196,7 +196,7 @@ if __name__ == "__main__":
     #findoldest("D:\\Dropbox", 30, searchstring=".")
     #listfiles("D:\\Desktop", recursive=0)
     #search("E:\\Laptop fullbkpup", "*vaibhav*.jpg*") #, startdate = "2017-06-01", stopdate= " 2017-07-31")
-    #search_user()
-    search_contents("d:\\desktop", fileext="py")
+    search_user()
+    #search_contents("d:\\desktop", fileext="py")
     pass
 
