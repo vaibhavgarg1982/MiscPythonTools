@@ -275,7 +275,7 @@ if __name__ == "__main__":
             sys.exit()
         
         recursive = (input("recursive? 0 for no and 1 for yes"))
-        nrecursive= 0 if (recursive == '') else 1
+        recursive= 0 if (recursive == '' or int(recursive)==0) else 1
 
         listfiles(rootdir, recursive)
 
@@ -297,6 +297,8 @@ if __name__ == "__main__":
 
     else:
         print("wrong choice, rerun the program and try again")
+
+    input("press enter to exit. Bye!")
 
 
 
