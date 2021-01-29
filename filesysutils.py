@@ -298,7 +298,7 @@ if __name__ == "__main__":
     else:
         print("wrong choice, rerun the program and try again")
 
-    input("press enter to exit. Bye!")
+    input("Press enter to exit. Bye!")
 
 
 
