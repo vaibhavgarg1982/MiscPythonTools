@@ -195,15 +195,6 @@ def search_contents(rootdir, fileext="txt", text_to_search=""):
 
 #driver code
 if __name__ == "__main__":
-    #dupefiles("F:", ".",10_000_000)
-    #findlargest("F:", 30, searchstring=".")
-    #finduniques("D:\\Dropbox\\Reading material", "D:\\Dropbox\epubs")
-    #findoldest("D:\\Dropbox", 30, searchstring=".")
-    #listfiles("D:\\Desktop", recursive=0)
-    #search("E:\\Laptop fullbkpup", "*vaibhav*.jpg*") #, startdate = "2017-06-01", stopdate= " 2017-07-31")
-    #search_user()
-    #search_contents("d:\\desktop", fileext="py")
-
     print("What do you want to do?")
     print("1:" + dupefiles.__doc__ + "?")
     print("2:" + findlargest.__doc__ + "?")
@@ -299,6 +290,4 @@ if __name__ == "__main__":
         print("wrong choice, rerun the program and try again")
 
     input("Press enter to exit. Bye!")
-
-
 
