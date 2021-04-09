@@ -1,5 +1,6 @@
 import os
 import sys
+
 def format_bytes(size):
     # 2**10 = 1024
     power = 2**10
@@ -127,6 +128,8 @@ def search(rootdir, searchstring="*", min_size=0, max_size =32e9, startdate = "1
     '''
     import fnmatch, datetime
     filedict={}
+    htmltoemit = '''<TABLE border=1>
+'''
     startyear, startmonth, startdate = map(int, startdate.split("-"))
     startdate = datetime.date(startyear, startmonth, startdate)
     stopyear, stopmonth, stopdate = map(int, stopdate.split("-"))
@@ -144,15 +147,27 @@ def search(rootdir, searchstring="*", min_size=0, max_size =32e9, startdate = "1
             try:
                 fileinfo = os.stat("\\\\?\\" + fullpath)
                 mdate = datetime.datetime.fromtimestamp(fileinfo.st_mtime).date()
+                
                 if ((os.stat(fullpath).st_size) >= min_size and 
                         (os.stat(fullpath).st_size) <=max_size and 
                         mdate >= startdate and 
                         mdate <= stopdate):
                     sz, lbl = format_bytes(fileinfo.st_size)
                     print(fullpath," | ",str(round(sz))+" "+lbl, " | ", mdate)
+                    htmltoemit += f"<TR> <TD>{fullpath}</TD> <TD>{ str(round(sz))} {lbl}</TD> <TD>{mdate}</TD></TR>"
+
             except:
                 print("*ERROR in: " + fullpath)
+                htmltoemit += f"<TR> <TD>{fullpath}</TD> <TD> </TD> <TD> </TD></TR>"
                 pass
+
+    htmltoemit +=f"</TABLE>"
+    #print(htmltoemit)
+    with open ("temp.html", mode='w') as f:
+        f.write(htmltoemit)
+    os.startfile("temp.html")
+
+
 
 def search_user():
     '''thin wrapper function for the search with minimal error handling '''
