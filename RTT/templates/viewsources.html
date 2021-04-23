@@ -1,0 +1,21 @@
+{%extends "layout.html" %}
+{% block content %}
+    <h1> View Sources </h1>
+    <table style="width: auto;" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 10%"> Source ID </th>
+            <th style="width: 30%">Source Name  </th>
+            <th style="width: 60%">Source Comments </th>
+        </tr>
+    </thead>
+        {% for item in srclist%} 
+        <tr>
+            <td>{{item[0]}} </td>
+            <td>{{item[1]}}  </td>
+            <td>{{item[2]}} </td>
+        </tr>
+
+        {%endfor%}
+    </table>
+{% endblock content %}

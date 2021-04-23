@@ -1,0 +1,42 @@
+{%extends "layout.html" %}
+{% block content %}
+<h1> View and Update Traceability </h1>
+
+<table style="width: auto;" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 30%"> Requirement </th>
+        <th style="width: 70%">Test Category - Test Case  </th>
+    </tr>
+</thead>
+    {% for item in tracs%} 
+    <tr>
+        <td>{{item[0]}} </td>
+        <td>{{item[1]}} - {{item[2]}}  </td>
+    </tr>
+
+    {%endfor%}
+</table>
+
+<form method="POST" action="/updatetrac">
+    <label for = "reqs"> Select Requirement</label><br>
+    <select name= reqs>
+        {% for req in reqs %}
+        <option value= "{{req}}" SELECTED>{{req}}</option>"
+        {% endfor %}
+    </select>
+    <br>
+
+    <label for = "testcases"> Select testcase</label><br>
+    <select name = testcases>
+        {% for testcase in testcases %}
+        <option value= "{{testcase}}" SELECTED>{{testcase}}</option>"
+        {% endfor %}
+        
+    </select>
+    <br>
+    <input type="submit" value="Add Traceability" name="addsrc" />
+</form>
+
+
+{% endblock content %}

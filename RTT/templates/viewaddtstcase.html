@@ -1,0 +1,38 @@
+{%extends "layout.html" %}
+{% block content %}
+    <h1> View and Add Test Cases</h1>
+    <table style="width: auto;" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 10%"> Test category </th>
+            <th style="width: 30%">Test Name (Test Id) </th>
+            <th style="width: 60%">Test Description   </th>
+        </tr>
+    </thead>
+        {% for item in srclist%} 
+        <tr>
+            <td>{{item[1]}} </td>
+            <td>{{item[2]}} ({{item[0]}})  </td>
+            <td>{{item[3]}} </td>
+        </tr>
+
+        {%endfor%}
+    </table>
+    
+    <form method="POST" action="/viewaddtstcase">
+        <label for="TestCat">Enter Test Category</label><br>
+        <input type="text" value = "" name = "TestCat" /><br><br>
+
+        <label for="TestName">Enter Test Case Name</label><br>
+        <input type="text" value = "" name = "TestName" /><br>
+        <br>
+        <label for="TestDes">Enter Test Case Description</label><br>
+        <input type="text" value = "" name = "TestDes" /><br>
+        <br>
+
+
+        <input type="submit" value="Add Test Case" name="addreq" />
+</form>
+
+
+{% endblock content %}

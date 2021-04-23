@@ -1,0 +1,33 @@
+{%extends "layout.html" %}
+{% block content %}
+    <h1> View and Add Requirements</h1>
+    <table style="width: auto;" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 10%"> Req. ID </th>
+            <th style="width: 30%">Requirement  </th>
+            <th style="width: 60%">Requirement Source (Source Id)  </th>
+        </tr>
+    </thead>
+        {% for item in srclist%} 
+        <tr>
+            <td>{{item[2]}} </td>
+            <td>{{item[3]}}  </td>
+            <td>{{item[1]}} ({{item[0]}}) </td>
+        </tr>
+
+        {%endfor%}
+    </table>
+    
+    <form method="POST" action="/viewaddreqs">
+        <label for="ReqSourceID">Enter requirement source ID</label><br>
+        <input type="text" value = "" name = "ReqSourceID" /><br><br>
+
+        <label for="ReqText">Enter Requirement</label><br>
+        <input type="text" value = "" name = "ReqText" /><br>
+        <br>
+        <input type="submit" value="Add Requirement" name="addreq" />
+</form>
+
+
+{% endblock content %}
