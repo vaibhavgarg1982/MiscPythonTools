@@ -41,7 +41,7 @@ def animate(i, *fargs):
     ys.append(y)
     lines[0].set_data(x,y)
     index = 0
-    phases = fargs[0::2]
+    phases = fargs[0::2] # every alternate value is the phase
     hmag = fargs[1::2]
 
     for index, phase in enumerate(phases, start=1,):
