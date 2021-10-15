@@ -1,0 +1,75 @@
+{%extends "layout.html" %}
+    {% block content %}
+        <h1> View Test Results by Project </h1>
+
+        <form method="POST" action="">
+            <label for="projects"> Select Projects</label><br>
+            <select name="projects" required>
+                <!-- disabled, means this is not selectable, selected means selected by default on page load -->
+                <option disabled selected value> -- select Project -- </option>
+                {% for proj in projects %}
+                    <option value="{{proj[0]}}">{{proj[1]}}</option>"
+                    <!--the value is posted, pass tuple, item[0] to be posted-->
+                {% endfor %}
+            </select>
+            <input type="submit" value="Select Project" name="addsrc" />
+        </form>
+        <br>
+        <!-- Add a horizontal line -->
+        <hr>
+        <br>
+        <h2>{{sel_project}}</h2>
+        <table id="table1" style="width: auto;" class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width: 5%">Project Name<br>Description </th>
+                    <th style="width: 10%">Test Category</th>
+                    <th style="width: 25%">Testcase Name<br>Description<br>Steps</th>
+                    <th style="width: 25%">Result Description</th>
+                    <th style="width: 20%">Config Info<br>Tester</th>
+                    <th style="width: 10%">Test Date</th>
+                    <th style="width: 5%">Verdict?</th>
+                </tr>
+            </thead>
+            {% for item in testresults%}
+            <tr>
+                <td>{{item[1]}}<br>{{item[2]}} </td>
+                <td>{{item[5]}} </td>
+                <td>{{item[4]}}<br>{{item[6]}}<br>{{item[7]}} </td>
+                <td>{{item[12]}} </td>
+                <td>{{item[13]}}<br>{{item[14]}}</td>
+                <td>{{item[15]}} </td>
+                <td>{{item[16]}} </td>
+
+            </tr>
+
+            {%endfor%}
+        </table>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">  </script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+        <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"> </script>
+        <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"> </script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">   </script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"> </script>
+        <script type="text/javascript">
+        
+            $(document).ready(function() {
+                $('#table1').DataTable( {
+            dom: 'lBfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+                //for more customizations
+                // $('#table1').DataTable({
+                //             pageLength: 100,
+                //             ordering: false
+                //         });
+            });
+    
+        </script>
+    {% endblock content %}

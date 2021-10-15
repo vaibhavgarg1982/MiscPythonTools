@@ -1,0 +1,59 @@
+{%extends "layout.html" %}
+{% block content %}
+    <h1> View and Add Projects</h1>
+    <table id=table1 style="width: auto;" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 10%">Project ID </th>
+            <th style="width: 30%">Project Name  </th>
+            <th style="width: 60%">Description</th>
+        </tr>
+    </thead>
+        {% for item in projects%} 
+        <tr>
+            <td>{{item[0]}} </td>
+            <td>{{item[1]}}  </td>
+            <td>{{item[2]}} </td>
+        </tr>
+
+        {%endfor%}
+    </table>
+
+    <form method="POST" action="/Projects">
+        <label for="letters">New Project</label><br>
+        <input type="text" value = "" name = "ProjectName" /><br><br>
+
+        <label for="filtertext">Brief Description</label><br>
+        <input type="text" value = "" name = "ProjectDescription" /><br>
+        <br>
+        <input type="submit" value="Add Project" name="addsrc" />
+    </form>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">  </script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"> </script>
+    <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"> </script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">   </script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"> </script>
+    <script type="text/javascript">
+    
+        $(document).ready(function() {
+            $('#table1').DataTable( {
+        dom: 'lBfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'print'
+        ]
+    } );
+            //for more customizations
+            // $('#table1').DataTable({
+            //             pageLength: 100,
+            //             ordering: false
+            //         });
+        });
+
+    </script>
+{% endblock content %}

@@ -1,0 +1,75 @@
+{%extends "layout.html" %}
+    {% block content %}
+        <h1> View Testcases with No Results</h1>
+
+        <form method="POST" action="">
+            <label for="projects"> Select Projects</label><br>
+            <select name="projects" required>
+                <!-- disabled, means this is not selectable, selected means selected by default on page load -->
+                <option disabled selected value> -- select Project -- </option>
+                {% for proj in projects %}
+                    <option value="{{proj[0]}}">{{proj[1]}}</option>"
+                    <!--the value is posted, pass tuple, item[0] to be posted-->
+                {% endfor %}
+            </select>
+            <input type="submit" value="Select Project" name="addsrc" />
+        </form>
+        <br>
+        <!-- Add a horizontal line -->
+        <hr>
+        <br>
+        <h2>{{sel_project}}</h2>
+        <table id="table1" style="width: auto;" class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width: 5%">ID </th>
+                    <th style="width: 10%">Name</th>
+                    <th style="width: 25%">Description</th>
+                    <th style="width: 10%">Category</th>
+                    <th style="width: 25%">Steps</th>
+                    <th style="width: 20%">Expected Result</th>
+                    <th style="width: 5%">Automated?</th>
+                </tr>
+            </thead>
+            {% for item in testcases%}
+            <tr>
+                <td>{{item[0]}} </td>
+                <td>{{item[1]}} </td>
+                <td>{{item[3]}} </td>
+                <td>{{item[2]}} </td>
+                <td>{{item[4]}} </td>
+                <td>{{item[5]}} </td>
+                <td>{{item[6]}} </td>
+
+            </tr>
+
+            {%endfor%}
+        </table>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">  </script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+        <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"> </script>
+        <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"> </script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">   </script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"> </script>
+        <script type="text/javascript">
+        
+            $(document).ready(function() {
+                $('#table1').DataTable( {
+            dom: 'lBfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+                //for more customizations
+                // $('#table1').DataTable({
+                //             pageLength: 100,
+                //             ordering: false
+                //         });
+            });
+    
+        </script>
+    {% endblock content %}

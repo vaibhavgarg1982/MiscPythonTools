@@ -1,0 +1,84 @@
+{%extends "layout.html" %}
+    {% block content %}
+        <h1> Enter Test Results (Under Development) </h1>
+
+        <form method="POST" action="">
+            <label for="projects"> Select Projects</label><br>
+            <select name="projects" required>
+                <!-- disabled, means this is not selectable, selected means selected by default on page load -->
+                <option disabled selected value> -- select Project -- </option>
+                {% for proj in projects %}
+                    <option value="{{proj[0]}}">{{proj[1]}}</option>"
+                    <!--the value is posted, pass tuple, item[0] to be posted-->
+                {% endfor %}
+            </select>
+            <input type="submit" value="Select Project" name="addsrc" />
+        </form>
+
+        <!-- Add a horizontal line -->
+        <hr>
+
+        <h2>{{sel_project}}</h2>
+        <!-- <h3>{{sel_project_id}}</h3> -->
+        <form method="post" action="">
+        <table id="table1" style="width: auto;" class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width: 5%">Category </th>
+                    <th style="width: 10%">Name<br>Description<br>Expected Result</th>
+                    <th style="width: 25%">Result Description</th>
+                    <th style="width: 10%">Config Info</th>
+                    <th style="width: 15%">Tester</th>
+                    <th style="width: 10%">When Executed</th>
+                    <th style="width: 5%">Pass_fail</th>
+                </tr>
+            </thead>
+            {% for item in testcases%}
+            <tr>
+                <td>{{item[2]}} </td>
+                <td>{{item[1]}}<br>{{item[3]}}<br>{{item[5]}} </td>
+                <td><textarea value = "" name = {{item[0]}}_{{sel_project_id}}_ResDescription cols="30" rows="3"></textarea> </td>
+                <td><input type="text" value = "" name = {{item[0]}}_{{sel_project_id}}_ConfigInfo style="width:100px"/> </td>
+                <td><input type="text" value = "" name = {{item[0]}}_{{sel_project_id}}_Tester style="width:100px"/> </td>
+                <td><input type="text" value = "" name = {{item[0]}}_{{sel_project_id}}_Date style="width:100px"/> </td>
+                <td><input type="text" value = "" name = {{item[0]}}_{{sel_project_id}}_PassFail style="width:100px"/> </td>
+
+            </tr>
+
+            {%endfor%}
+        </table>
+        <br>
+        <hr>
+
+            <input type="submit" value="Add Test Results" name="addsrc" />
+   
+
+        </form>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">  </script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+        <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"> </script>
+        <script src = "https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"> </script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">   </script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"> </script>
+        <script type="text/javascript">
+        
+            $(document).ready(function() {
+                $('#table1').DataTable( {
+            dom: 'lBfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+                //for more customizations
+                // $('#table1').DataTable({
+                //             pageLength: 100,
+                //             ordering: false
+                //         });
+            });
+    
+        </script>
+    {% endblock content %}
