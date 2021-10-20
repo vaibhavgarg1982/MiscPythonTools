@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, Response
+from flask import Flask, render_template, request, url_for, redirect, Response, send_from_directory
 from flask_login import (
     LoginManager,
     login_user,
@@ -8,12 +8,12 @@ from flask_login import (
     UserMixin,
 )
 
-import csv
+import os
 import json
 
 import sqlite3
 
-app = Flask("__name__")
+app = Flask(__name__)
 app.secret_key = "d9b98d29c818ee2e82b3b608c0d72257"
 
 login_manager = LoginManager()
@@ -273,7 +273,7 @@ def testresults():
                         "config_info": d_tr[map_id].get("ConfigInfo", ""),
                         "tester": d_tr[map_id].get("Tester", ""),
                         "execution_date": d_tr[map_id].get("Date", ""),
-                        "pass_fail": d_tr[map_id].get("PassFail", "")
+                        "pass_fail": d_tr[map_id].get("PassFail", ""),
                     },
                 )
             conn.commit()
@@ -318,10 +318,8 @@ def testresults_by_project():
         # query to fetch all the test results for a particular project id from the testresults table, using the mapping table
         query = "SELECT Mst_projects.*, Mst_testcases.*, testresults.* FROM mapping JOIN Mst_projects ON mapping.project_id = Mst_projects.project_id JOIN Mst_testcases ON mapping.testcase_id = Mst_testcases.testcase_id JOIN testresults ON mapping.map_id = testresults.map_id where Mst_projects.project_id = :project_id"
         all_d = [row for row in c.execute(query, {"project_id": project_id})]
-        
 
         # print(all_d)
-
 
         query = "SELECT name FROM Mst_projects WHERE project_id = " + project_id
         project_name = [row for row in c.execute(query)]
@@ -334,6 +332,7 @@ def testresults_by_project():
         )
     conn.close()
     return render_template("testresults_by_project.html", projects=projects)
+
 
 def sql_data_to_list_of_dicts(path_to_db, select_query):
     """Returns data from an SQL query as a list of dicts."""
@@ -349,21 +348,24 @@ def sql_data_to_list_of_dicts(path_to_db, select_query):
     finally:
         con.close()
 
+
 @app.route("/downloadall")
 @login_required
 def downloadall():
-    tr = sql_data_to_list_of_dicts("testing.db", 
-        "SELECT Mst_projects.*, Mst_testcases.*, testresults.* FROM mapping JOIN Mst_projects ON mapping.project_id = Mst_projects.project_id JOIN Mst_testcases ON mapping.testcase_id = Mst_testcases.testcase_id JOIN testresults ON mapping.map_id = testresults.map_id")
-    
-    mapp = sql_data_to_list_of_dicts("testing.db",
-        "SELECT Mst_projects.*, Mst_testcases.* FROM mapping JOIN Mst_projects ON mapping.project_id = Mst_projects.project_id JOIN Mst_testcases ON mapping.testcase_id = Mst_testcases.testcase_id JOIN testresults ON mapping.map_id = testresults.map_id")
-    
-    tc = sql_data_to_list_of_dicts("testing.db",
-        "Select * from Mst_testcases")
-    
-    projs = sql_data_to_list_of_dicts("testing.db",
-        "Select * from Mst_projects")
-    
+    tr = sql_data_to_list_of_dicts(
+        "testing.db",
+        "SELECT Mst_projects.*, Mst_testcases.*, testresults.* FROM mapping JOIN Mst_projects ON mapping.project_id = Mst_projects.project_id JOIN Mst_testcases ON mapping.testcase_id = Mst_testcases.testcase_id JOIN testresults ON mapping.map_id = testresults.map_id",
+    )
+
+    mapp = sql_data_to_list_of_dicts(
+        "testing.db",
+        "SELECT Mst_projects.*, Mst_testcases.* FROM mapping JOIN Mst_projects ON mapping.project_id = Mst_projects.project_id JOIN Mst_testcases ON mapping.testcase_id = Mst_testcases.testcase_id JOIN testresults ON mapping.map_id = testresults.map_id",
+    )
+
+    tc = sql_data_to_list_of_dicts("testing.db", "Select * from Mst_testcases")
+
+    projs = sql_data_to_list_of_dicts("testing.db", "Select * from Mst_projects")
+
     all_data = {}
     all_data["testresults"] = tr
     all_data["mapping"] = mapp
@@ -375,8 +377,9 @@ def downloadall():
         mimetype="application/json",
         headers={"Content-Disposition": "attachment;filename=all_data.json"},
     )
-    
-@app.route("/noresults", methods = ["GET", "POST"])
+
+
+@app.route("/noresults", methods=["GET", "POST"])
 @login_required
 def noresults():
     conn = sqlite3.connect("testing.db")
@@ -408,6 +411,7 @@ def noresults():
 
     pass
 
+
 @app.route("/logout")
 def logout():
     logout_user()
@@ -418,6 +422,9 @@ def logout():
 def unauthorized_handler():
     return "Unauthorized"
 
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, "static"), "favicon.ico", mimetype="image/vnd.microsoft.icon")
 
 def create_tables():
     """create a new database if the database doesn't already exist
@@ -483,8 +490,10 @@ def create_tables():
     )
     conn.close()
 
+
 if __name__ == "__main__":
     create_tables()
     app.run(
-        debug=True, host='0.0.0.0') #drop the host parameter to make this local-only
+        debug=True, host="0.0.0.0"
+    )  # drop the host parameter to make this local-only
     # available across the network at the moment.
