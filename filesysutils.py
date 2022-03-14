@@ -294,7 +294,7 @@ if __name__ == "__main__":
             print("Path is mandatory")
             sys.exit()
         fileext = input("Enter fileext (Press enter to leave unspecified): ")
-        fileext = "txt" if (searchstring == '') else searchstring
+        fileext = "txt" if (fileext == '') else fileext
 
         text_to_search = input("Enter text_to_search (Press enter to leave unspecified): ")
         text_to_search = "" if (text_to_search == '') else text_to_search
