@@ -193,7 +193,10 @@ def git_log(args, json_flags):
 
         commits.append(commit)
     #write json file to disk, log.json
-    json.dump(commits, open('log.json', 'w'), indent=4)
+    # json.dump(commits, open('log.json', 'w'), indent=4)
+    import pandas as pd
+    df = pd.json_normalize(commits, record_path=['files'], meta=['name', 'date_iso', 'subject', 'sha'])
+    df.to_csv('log.csv')
 
 
 if __name__ == '__main__':
